@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Burger House</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#0b0b0b;
+    color:#fff;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+header{
+    height:75px;
+    background:#111;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:26px;
+    font-weight:900;
+    color:#ffb000;
+}
+
+.logo span{
+    color:#fff;
+}
+
+nav{
+    display:flex;
+    gap:25px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:#ffb000;
+}
+
+.cart-button{
+    background:#ffb000;
+    color:#111;
+    border:0;
+    padding:12px 18px;
+    border-radius:25px;
+    font-weight:bold;
+}
+
+/* SLIDER */
+
+.slider{
+    position:relative;
+    width:100%;
+    height:430px;
+    overflow:hidden;
+}
+
+.slide{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    transition:opacity .7s ease;
+    display:flex;
+    align-items:center;
+    padding:0 8%;
+}
+
+.slide.active{
+    opacity:1;
+}
+
+.slide1{
+    background:linear-gradient(90deg,#000 20%,rgba(0,0,0,.55)),url("https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1600&q=80") center/cover;
+}
+
+.slide2{
+    background:linear-gradient(90deg,#000 20%,rgba(0,0,0,.5)),url("https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=1600&q=80") center/cover;
+}
+
+.slide3{
+    background:linear-gradient(90deg,#000 20%,rgba(0,0,0,.5)),url("https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=80") center/cover;
+}
+
+.slide-content{
+    max-width:600px;
+}
+
+.slide h1{
+    font-size:52px;
+    margin-bottom:15px;
+}
+
+.slide p{
+    font-size:20px;
+    color:#ddd;
+    margin-bottom:25px;
+}
+
+.slide-button{
+    display:inline-block;
+    background:#ffb000;
+    color:#111;
+    padding:15px 25px;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.dots{
+    position:absolute;
+    bottom:18px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:10px;
+    z-index:20;
+}
+
+.dot{
+    width:11px;
+    height:11px;
+    border-radius:50%;
+    border:0;
+    background:#777;
+}
+
+.dot.active{
+    background:#ffb000;
+    transform:scale(1.3);
+}
+
+/* STATUS */
+
+.status-area{
+    padding:30px 6%;
+    background:#111;
+}
+
+.status-title{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.status{
+    max-width:850px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.status-step{
+    flex:1;
+    text-align:center;
+    padding:15px;
+    border-radius:12px;
+    background:#1d1d1d;
+    color:#777;
+}
+
+.status-step.active{
+    color:#111;
+    background:#ffb000;
+    font-weight:bold;
+}
+
+/* PRODUTOS */
+
+.container{
+    width:88%;
+    max-width:1250px;
+    margin:auto;
+}
+
+section{
+    padding:55px 0;
+}
+
+.section-title{
+    font-size:32px;
+    margin-bottom:30px;
+}
+
+.recommendations{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.product-card{
+    background:#151515;
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid #292929;
+    transition:.25s;
+}
+
+.product-card:hover{
+    transform:translateY(-5px);
+    border-color:#ffb000;
+}
+
+.product-img{
+    width:100%;
+    height:210px;
+    object-fit:cover;
+}
+
+.product-info{
+    padding:18px;
+}
+
+.product-info h3{
+    margin-bottom:8px;
+}
+
+.description{
+    color:#aaa;
+    font-size:14px;
+    min-height:40px;
+    margin-bottom:15px;
+}
+
+.price{
+    color:#ffb000;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.add-button{
+    width:100%;
+    border:0;
+    margin-top:15px;
+    padding:12px;
+    border-radius:10px;
+    background:#ffb000;
+    color:#111;
+    font-weight:bold;
+}
+
+.add-button:hover{
+    background:#ffc533;
+}
+
+/* CATEGORIAS */
+
+.category{
+    margin-bottom:55px;
+}
+
+.category h2{
+    font-size:28px;
+    margin-bottom:20px;
+    border-left:5px solid #ffb000;
+    padding-left:12px;
+}
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+/* CARRINHO */
+
+.cart-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    z-index:2000;
+    display:none;
+}
+
+.cart-overlay.open{
+    display:block;
+}
+
+.cart{
+    position:absolute;
+    right:0;
+    top:0;
+    height:100%;
+    width:420px;
+    max-width:95%;
+    background:#111;
+    padding:25px;
+    overflow-y:auto;
+    box-shadow:-10px 0 30px rgba(0,0,0,.5);
+}
+
+.cart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.close-cart{
+    background:none;
+    border:0;
+    color:#fff;
+    font-size:28px;
+}
+
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    padding:15px 0;
+    border-bottom:1px solid #292929;
+}
+
+.cart-item h4{
+    margin-bottom:6px;
+}
+
+.cart-item small{
+    color:#aaa;
+}
+
+.quantity{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.quantity button{
+    width:28px;
+    height:28px;
+    border:0;
+    border-radius:50%;
+    background:#ffb000;
+    font-weight:bold;
+}
+
+.cart-total{
+    margin-top:25px;
+    font-size:22px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.checkout{
+    margin-top:20px;
+}
+
+.checkout input,
+.checkout textarea{
+    width:100%;
+    margin-top:10px;
+    padding:13px;
+    background:#1c1c1c;
+    border:1px solid #333;
+    border-radius:8px;
+    color:#fff;
+    outline:none;
+}
+
+.checkout textarea{
+    resize:vertical;
+    min-height:80px;
+}
+
+.whatsapp{
+    width:100%;
+    border:0;
+    margin-top:15px;
+    padding:15px;
+    background:#25d366;
+    color:#fff;
+    border-radius:10px;
+    font-weight:bold;
+    font-size:16px;
+}
+
+/* FOOTER */
+
+footer{
+    background:#050505;
+    padding:35px 6%;
+    text-align:center;
+    color:#777;
+}
+
+@media(max-width:900px){
+
+    nav{
+        display:none;
+    }
+
+    .slider{
+        height:420px;
+    }
+
+    .slide h1{
+        font-size:38px;
+    }
+
+    .recommendations{
+        grid-template-columns:1fr;
+    }
+
+    .products{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .status{
+        flex-direction:column;
+    }
+}
+
+@media(max-width:550px){
+
+    .products{
+        grid-template-columns:1fr;
+    }
+
+    .slide{
+        padding:0 6%;
+    }
+
+    .slide h1{
+        font-size:32px;
+    }
+
+    .slide p{
+        font-size:17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">BURGER<span>HOUSE</span></div>
+
+    <nav>
+        <a href="#inicio">Início</a>
+        <a href="#mais-vendidos">Mais vendidos</a>
+        <a href="#cardapio">Cardápio</a>
+    </nav>
+
+    <button class="cart-button" onclick="abrirCarrinho()">
+        🛒 Carrinho <span id="cartCount">0</span>
+    </button>
+</header>
+
+<!-- SLIDER -->
+
+<div class="slider" id="inicio">
+
+    <div class="slide slide1 active">
+        <div class="slide-content">
+            <h1>O sabor que merece seu pedido.</h1>
+            <p>Hambúrguer artesanal, ingredientes selecionados e muito sabor.</p>
+            <a href="#cardapio" class="slide-button">Ver cardápio</a>
+        </div>
+    </div>
+
+    <div class="slide slide2">
+        <div class="slide-content">
+            <h1>Seu hambúrguer favorito.</h1>
+            <p>Escolha seu lanche e monte seu pedido do seu jeito.</p>
+            <a href="#cardapio" class="slide-button">Fazer pedido</a>
+        </div>
+    </div>
+
+    <div class="slide slide3">
+        <div class="slide-content">
+            <h1>Pedido rápido e fácil.</h1>
+            <p>Monte o carrinho e envie seu pedido diretamente pelo WhatsApp.</p>
+            <a href="#cardapio" class="slide-button">Pedir agora</a>
+        </div>
+    </div>
+
+    <div class="dots">
+        <button class="dot active" onclick="irSlide(0)"></button>
+        <button class="dot" onclick="irSlide(1)"></button>
+        <button class="dot" onclick="irSlide(2)"></button>
+    </div>
+
+</div>
+
+<!-- STATUS -->
+
+<div class="status-area">
+
+    <h2 class="status-title">📦 Acompanhe seu pedido</h2>
+
+    <div class="status">
+
+        <div class="status-step active" id="status1">
+            📝<br>
+            Pedido recebido
+        </div>
+
+        <div class="status-step" id="status2">
+            👨‍🍳<br>
+            Pedido pronto
+        </div>
+
+        <div class="status-step" id="status3">
+            🛵<br>
+            Saiu para entrega
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MAIS VENDIDOS -->
+
+<section id="mais-vendidos">
+
+<div class="container">
+
+<h2 class="section-title">🔥 Mais pedidos do mês</h2>
+
+<div class="recommendations">
+
+    <div class="product-card">
+
+        <img class="product-img"
+        src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80">
+
+        <div class="product-info">
+            <h3>🔥 Burger House Especial</h3>
+            <p class="description">Hambúrguer artesanal, queijo, bacon e molho especial.</p>
+            <span class="price">R$ 29,90</span>
+            <button class="add-button"
+            onclick="adicionarProduto('Burger House Especial',29.90)">
+            Adicionar
+            </button>
+        </div>
+
+    </div>
+
+    <div class="product-card">
+
+        <img class="product-img"
+        src="https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=900&q=80">
+
+        <div class="product-info">
+            <h3>🔥 Bacon Supreme</h3>
+            <p class="description">Carne artesanal, queijo cheddar e muito bacon.</p>
+            <span class="price">R$ 31,90</span>
+            <button class="add-button"
+            onclick="adicionarProduto('Bacon Supreme',31.90)">
+            Adicionar
+            </button>
+        </div>
+
+    </div>
+
+    <div class="product-card">
+
+        <img class="product-img"
+        src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=900&q=80">
+
+        <div class="product-info">
+            <h3>🔥 Duplo Cheddar</h3>
+            <p class="description">Dois hambúrgueres, cheddar cremoso e molho da casa.</p>
+            <span class="price">R$ 34,90</span>
+            <button class="add-button"
+            onclick="adicionarProduto('Duplo Cheddar',34.90)">
+            Adicionar
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- CARDÁPIO -->
+
+<section id="cardapio">
+
+<div class="container">
+
+<h2 class="section-title">🍔 Nosso cardápio</h2>
+
+<!-- NORMAL -->
+
+<div class="category">
+
+<h2>🍔 Hambúrguer Normal</h2>
+
+<div class="products">
+
+<div class="product-card">
+<img class="product-img" src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=700&q=80">
+<div class="product-info">
+<h3>Classic Burger</h3>
+<p class="description">Carne artesanal, queijo e molho especial.</p>
+<span class="price">R$ 22,90</span>
+<button class="add-button" onclick="adicionarProduto('Classic Burger',22.90)">Adicionar</button>
+</div>
+</div>
+
+<div class="product-card">
+<img class="product-img" src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=700&q=80">
+<div class="product-info">
+<h3>Cheese Burger</h3>
+<p class="description">Carne, queijo, alface e tomate.</p>
+<span class="price">R$ 24,90</span>
+<button class="add-button" onclick="adicionarProduto('Cheese Burger',24.90)">Adicionar</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- TRADICIONAL -->
+
+<div class="category">
+
+<h2>🍔 Tradicional</h2>
+
+<div class="products">
+
+<div class="product-card">
+<img class="product-img" src="https://images.unsplash.com/photo-1553979459-d2229ba7433a?auto=format&fit=crop&w=700&q=80">
+<div class="product-info">
+<h3>Tradicional Bacon</h3>
+<p class="description">Carne, queijo, bacon e molho da casa.</p>
+<span class="price">R$ 27,90</span>
+<button class="add-button" onclick="adicionarProduto('Tradicional Bacon',27.90)">Adicionar</button>
+</div>
+</div>
+
+<div class="product-card">
+<img class="product-img" src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=700&q=80">
+<div class="product-info">
+<h3>Duplo Burger</h3>
+<p class="description">Dois hambúrgueres artesanais e queijo.</p>
+<span class="price">R$ 30,90</span>
+<button class="add-button" onclick="adicionarProduto('Duplo Burger',30.90)">Adicionar</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- PIZZA -->
+
+<div class="category">
+
+<h2>🍕 Pizza</h2>
+
+<div class="products">
+
+<div class="product-card">
+<img class="product-img" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=700&q=80">
+<div class="product-info">
+<h3>Pizza Calabresa</h3>
+<p class="description">Calabresa, queijo, cebola e molho.</p>
+<span class="price">R$ 39,90</span>
+<button class="add-button" onclick="adicionarProduto('Pizza Calabresa',39.90)">Adicionar</button>
+</div>
+</div>
+
+<div class="product-card">
+<img class="product-img" src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=700&q=80">
+<div class="product-info">
+<h3>Pizza Quatro Queijos</h3>
+<p class="description">Uma combinação cremosa de queijos.</p>
+<span class="price">R$ 44,90</span>
+<button class="add-button" onclick="adicionarProduto('Pizza Quatro Queijos',44.90)">Adicionar</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- BEBIDAS -->
+
+<div class="category">
+
+<h2>🥤 Bebidas</h2>
+
+<div class="products">
+
+<div class="product-card">
+<div class="product-info">
+<h3>Coca-Cola Lata</h3>
+<p class="description">Refrigerante gelado.</p>
+<span class="price">R$ 6,00</span>
+<button class="add-button" onclick="adicionarProduto('Coca-Cola Lata',6)">Adicionar</button>
+</div>
+</div>
+
+<div class="product-card">
+<div class="product-info">
+<h3>Guaraná Lata</h3>
+<p class="description">Refrigerante gelado.</p>
+<span class="price">R$ 6,00</span>
+<button class="add-button" onclick="adicionarProduto('Guaraná Lata',6)">Adicionar</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- ADICIONAIS -->
+
+<div class="category">
+
+<h2>➕ Adicionais</h2>
+
+<div class="products">
+
+<div class="product-card">
+<div class="product-info">
+<h3>Bacon Extra</h3>
+<p class="description">Porção extra de bacon.</p>
+<span class="price">R$ 5,00</span>
+<button class="add-button" onclick="adicionarProduto('Bacon Extra',5)">Adicionar</button>
+</div>
+</div>
+
+<div class="product-card">
+<div class="product-info">
+<h3>Cheddar Extra</h3>
+<p class="description">Cheddar cremoso extra.</p>
+<span class="price">R$ 4,00</span>
+<button class="add-button" onclick="adicionarProduto('Cheddar Extra',4)">Adicionar</button>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- CARRINHO -->
+
+<div class="cart-overlay" id="cartOverlay">
+
+<div class="cart">
+
+<div class="cart-header">
+
+<h2>🛒 Seu pedido</h2>
+
+<button class="close-cart" onclick="fecharCarrinho()">×</button>
+
+</div>
+
+<div id="cartItems"></div>
+
+<div class="cart-total">
+
+<strong>Total:</strong>
+<strong>R$ <span id="cartTotal">0,00</span></strong>
+
+</div>
+
+<div class="checkout">
+
+<input
+type="text"
+id="customerName"
+placeholder="Seu nome">
+
+<input
+type="text"
+id="customerAddress"
+placeholder="Endereço para entrega">
+
+<textarea
+id="customerObs"
+placeholder="Observações do pedido"></textarea>
+
+<button class="whatsapp" onclick="enviarWhatsApp()">
+📱 Enviar pedido pelo WhatsApp
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 Burger House — Projeto demonstrativo desenvolvido pela WebPro.
+</footer>
+
+<script>
+
+let carrinho = [];
+
+let slideAtual = 0;
+
+const slides = document.querySelectorAll(".slide");
+const dots = document.querySelectorAll(".dot");
+
+/* SLIDER */
+
+function mostrarSlide(numero){
+
+    slides.forEach(slide => {
+        slide.classList.remove("active");
+    });
+
+    dots.forEach(dot => {
+        dot.classList.remove("active");
+    });
+
+    slides[numero].classList.add("active");
+    dots[numero].classList.add("active");
+
+    slideAtual = numero;
+}
+
+function irSlide(numero){
+    mostrarSlide(numero);
+}
+
+setInterval(() => {
+
+    slideAtual++;
+
+    if(slideAtual >= slides.length){
+        slideAtual = 0;
+    }
+
+    mostrarSlide(slideAtual);
+
+},3000);
+
+
+/* CARRINHO */
+
+function adicionarProduto(nome, preco){
+
+    const produtoExistente = carrinho.find(
+        item => item.nome === nome
+    );
+
+    if(produtoExistente){
+
+        produtoExistente.quantidade++;
+
+    }else{
+
+        carrinho.push({
+            nome:nome,
+            preco:preco,
+            quantidade:1
+        });
+
+    }
+
+    atualizarCarrinho();
+
+    abrirCarrinho();
+}
+
+
+function aumentar(nome){
+
+    const produto = carrinho.find(
+        item => item.nome === nome
+    );
+
+    if(produto){
+        produto.quantidade++;
+    }
+
+    atualizarCarrinho();
+}
+
+
+function diminuir(nome){
+
+    const produto = carrinho.find(
+        item => item.nome === nome
+    );
+
+    if(!produto) return;
+
+    produto.quantidade--;
+
+    if(produto.quantidade <= 0){
+
+        carrinho = carrinho.filter(
+            item => item.nome !== nome
+        );
+
+    }
+
+    atualizarCarrinho();
+}
+
+
+function atualizarCarrinho(){
+
+    const container = document.getElementById("cartItems");
+
+    container.innerHTML = "";
+
+    let total = 0;
+    let quantidadeTotal = 0;
+
+    carrinho.forEach(item => {
+
+        total += item.preco * item.quantidade;
+
+        quantidadeTotal += item.quantidade;
+
+        const div = document.createElement("div");
+
+        div.className = "cart-item";
+
+        div.innerHTML = `
+
+            <div>
+                <h4>${item.nome}</h4>
+
+                <small>
+                    R$ ${item.preco.toFixed(2).replace(".",",")}
+                </small>
+            </div>
+
+            <div class="quantity">
+
+                <button onclick="diminuir('${item.nome}')">
+                    -
+                </button>
+
+                <span>${item.quantidade}</span>
+
+                <button onclick="aumentar('${item.nome}')">
+                    +
+                </button>
+
+            </div>
+        `;
+
+        container.appendChild(div);
+
+    });
+
+    document.getElementById("cartTotal").textContent =
+        total.toFixed(2).replace(".",",");
+
+    document.getElementById("cartCount").textContent =
+        quantidadeTotal;
+}
+
+
+function abrirCarrinho(){
+
+    document
+    .getElementById("cartOverlay")
+    .classList.add("open");
+
+}
+
+
+function fecharCarrinho(){
+
+    document
+    .getElementById("cartOverlay")
+    .classList.remove("open");
+
+}
+
+
+/* NÚMERO DO PEDIDO */
+
+function gerarNumeroPedido(){
+
+    const hoje = new Date();
+
+    const data =
+        hoje.getFullYear() + "-" +
+        String(hoje.getMonth()+1).padStart(2,"0") + "-" +
+        String(hoje.getDate()).padStart(2,"0");
+
+    const chave = "burgerhouse_pedidos_" + data;
+
+    let numero =
+        parseInt(localStorage.getItem(chave) || "0");
+
+    numero++;
+
+    localStorage.setItem(chave, numero);
+
+    return numero;
+}
+
+
+/* WHATSAPP */
+
+function enviarWhatsApp(){
+
+    if(carrinho.length === 0){
+
+        alert("Seu carrinho está vazio!");
+
+        return;
+    }
+
+    const nome =
+        document.getElementById("customerName").value.trim();
+
+    const endereco =
+        document.getElementById("customerAddress").value.trim();
+
+    const observacao =
+        document.getElementById("customerObs").value.trim();
+
+    if(!nome){
+
+        alert("Digite seu nome.");
+
+        return;
+    }
+
+    if(!endereco){
+
+        alert("Digite o endereço para entrega.");
+
+        return;
+    }
+
+    const numeroPedido =
+        gerarNumeroPedido();
+
+    let mensagem =
+        `🍔 *BURGER HOUSE*%0A%0A`;
+
+    mensagem +=
+        `📋 *Pedido Nº ${numeroPedido}*%0A`;
+
+    mensagem +=
+        `👤 Cliente: ${nome}%0A`;
+
+    mensagem +=
+        `📍 Endereço: ${endereco}%0A%0A`;
+
+    mensagem +=
+        `*ITENS DO PEDIDO:*%0A`;
+
+    let total = 0;
+
+    carrinho.forEach(item => {
+
+        const subtotal =
+            item.preco * item.quantidade;
+
+        total += subtotal;
+
+        mensagem +=
+            `${item.quantidade}x ${item.nome} — R$ ${subtotal.toFixed(2).replace(".",",")}%0A`;
+
+    });
+
+    mensagem +=
+        `%0A💰 *TOTAL: R$ ${total.toFixed(2).replace(".",",")}*%0A`;
+
+    if(observacao){
+
+        mensagem +=
+            `%0A📝 Observação: ${observacao}%0A`;
+
+    }
+
+    mensagem +=
+        `%0AObrigado! 🍔🔥`;
+
+    /*
+       TROQUE O NÚMERO ABAIXO PELO WHATSAPP DA HAMBURGUERIA.
+
+       Exemplo:
+       5532999562216
+    */
+
+    const telefone =
+        "5532999562216";
+
+    const url =
+        `https://wa.me/${telefone}?text=${mensagem}`;
+
+    window.open(url,"_blank");
+
+}
+
+
+/* FECHAR CARRINHO CLICANDO FORA */
+
+document
+.getElementById("cartOverlay")
+.addEventListener("click",function(event){
+
+    if(event.target === this){
+        fecharCarrinho();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
